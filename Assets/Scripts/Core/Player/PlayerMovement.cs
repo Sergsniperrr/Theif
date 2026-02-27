@@ -12,6 +12,10 @@ public class PlayerMovement : MonoBehaviour
   private Animator _animator;
   private Player _player;
   private float _deceleratingSpeed = 0.13f;
+  private float _angleRad;
+  private Vector3 _movementDirection;
+  private Vector3 _newJoystick = Vector3.zero;
+  private Vector3 _targetPos;
 
   public bool IsMove { get; private set; } = false;
 
@@ -51,22 +55,26 @@ public class PlayerMovement : MonoBehaviour
 
   private void Move()
   {
-    float angleRad = Angle * Mathf.Deg2Rad;
-    Vector2 newJoystick = new Vector2(_dynamicJoystick.Horizontal, _dynamicJoystick.Vertical);
-    newJoystick.x = _dynamicJoystick.Horizontal * Mathf.Cos(angleRad) - _dynamicJoystick.Vertical * Mathf.Sin(angleRad);
-    newJoystick.y = _dynamicJoystick.Horizontal * Mathf.Sin(angleRad) + _dynamicJoystick.Vertical * Mathf.Cos(angleRad);
-    Vector3 targetPos = transform.position + new Vector3(newJoystick.x, 0, newJoystick.y);
+    _movementDirection.z = Input.GetAxis("Horizontal");
+    _movementDirection.x = -Input.GetAxis("Vertical");
 
-    if (_navMeshAgent.velocity.sqrMagnitude > Constant.MinimumMovementSpeed ||
-        _navMeshAgent.velocity.sqrMagnitude > Constant.MinimumMovementSpeed)
+    _angleRad = Angle * Mathf.Deg2Rad;
+    _newJoystick.x = _dynamicJoystick.Horizontal * Mathf.Cos(_angleRad) -
+                     _dynamicJoystick.Vertical * Mathf.Sin(_angleRad);
+    _newJoystick.z = _dynamicJoystick.Horizontal * Mathf.Sin(_angleRad) +
+                     _dynamicJoystick.Vertical * Mathf.Cos(_angleRad);
+    _targetPos = transform.position + _newJoystick + _movementDirection;
+
+    if (_navMeshAgent.velocity.sqrMagnitude > Constant.MinimumMovementSpeed)
     {
-      transform.LookAt(targetPos);
+      transform.LookAt(_targetPos);
       IsMove = true;
     }
     else
+    {
       IsMove = false;
+    }
 
-
-    _navMeshAgent.SetDestination(targetPos);
+    _navMeshAgent.SetDestination(_targetPos);
   }
 }
