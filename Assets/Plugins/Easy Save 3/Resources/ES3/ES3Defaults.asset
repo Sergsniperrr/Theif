@@ -30,18 +30,26 @@ MonoBehaviour:
     serializationDepthLimit: 64
     assemblyNames:
     - Assembly-CSharp-firstpass
+    - MirraGames.SDK.Common
     - Zenject
-    - AllIn1VfxAssmebly
+    - MirraGames.SDK.UnityEngine
     - AllIn1VfxDemoScriptAssemblies
     - Zenject-IntegrationTests
+    - MirraGames.SDK
+    - MirraGames.SDK.Fallback
     - Cinemachine
     - Assembly-CSharp
+    - AllIn1VfxAssmebly
+    - MirraGames.SDK.Editor
     - OEBIF
-    - Zenject-TestFramework
-    - NavMeshComponentsEditor
+    - MirraGames.SDK.Prototype
     - NavMeshComponents
-    - AllIn1VfxTexDemoAssembly
+    - NavMeshComponentsEditor
+    - Zenject-TestFramework
     - BBDataTypes
+    - AllIn1VfxTexDemoAssembly
+    - MirraGames.SDK.Addressables
+    - MirraGames.SDK.System
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

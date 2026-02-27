@@ -9,6 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: AppMetricaObject
+  m_Script: {fileID: 11500000, guid: 128d17dc040af4940b6e3e8b766a2380, type: 3}
+  m_Name: PrototypeBase
   m_EditorClassIdentifier: 
+  <VisualTree>k__BackingField: {fileID: 9197481963319205126, guid: 56d6a02ae45bf2f47b8165df3d0712b6, type: 3}
