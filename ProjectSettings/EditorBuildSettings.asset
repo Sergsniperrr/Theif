@@ -32,4 +32,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Houses/House2(Hard).unity
     guid: e154bbdf1bbf21e4782ebb80989ffb2b
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 731366325c026d84ab97926aece40e28, type: 2}

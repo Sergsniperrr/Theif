@@ -43,6 +43,7 @@ MonoBehaviour:
     - MirraGames.SDK.Editor
     - OEBIF
     - MirraGames.SDK.Prototype
+    - Sirenix.OdinInspector.Modules.Unity.Addressables
     - NavMeshComponents
     - NavMeshComponentsEditor
     - Zenject-TestFramework
