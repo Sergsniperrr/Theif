@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class Wallet : MonoBehaviour
 {
+  private const int RoundingDepth = 2;
+  private const float ItemPrice = 0.05f;
+  
   [SerializeField] private float _bitcoin;
   [SerializeField] private LevelViewer _levelViewer;
   [SerializeField] private SellButton _sellButton;
@@ -27,7 +30,8 @@ public class Wallet : MonoBehaviour
 
   private void IncreaseMoney(int item)
   {
-    _bitcoin += 0.05f;
+    _bitcoin = (float)Math.Round(_bitcoin + ItemPrice, RoundingDepth, MidpointRounding.AwayFromZero);
+    
     BitcoinChanged?.Invoke(_bitcoin);
     ES3.Save(SaveProgress.TitleKey.Money, _bitcoin, SaveProgress.FilePath.Money);
   }

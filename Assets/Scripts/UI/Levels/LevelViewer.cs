@@ -118,7 +118,7 @@ public class LevelViewer : MonoBehaviour
       ES3.Save(SaveProgress.TitleKey.PurchasesNumber, purchasesNumber, SaveProgress.FilePath.Purchases);
       _buyLevels[_currentLevel] = true;
       _levelName.text = _levels[_currentLevel].Title;
-      LevelPurchased?.Invoke(nextValue);
+      LevelPurchased?.Invoke(_price);
       _buyButton.gameObject.SetActive(false);
       _playButton.gameObject.SetActive(true);
       
