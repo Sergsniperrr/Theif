@@ -5,19 +5,19 @@ using UnityEngine;
 public class Wallet : MonoBehaviour
 {
     private const int RoundingDepth = 2;
-    private const float ItemPrice = 0.05f;
+    private const int ItemPrice = 50;
 
-    [SerializeField] private float _bitcoin;
+    [SerializeField] private int _coins;
     [SerializeField] private LevelViewer _levelViewer;
     [SerializeField] private SellButton _sellButton;
 
-    public float Bitcoin => _bitcoin;
+    public float Coins => _coins;
 
-    public event Action<float> BitcoinChanged;
+    public event Action<int> CoinChanged;
 
     private void Awake()
     {
-        _bitcoin = MirraSDK.Data.GetFloat(SavableKeys.Bitcoins);
+        _coins = MirraSDK.Data.GetInt(SavableKeys.Coins);
     }
 
     public void OnEnable()
@@ -34,19 +34,20 @@ public class Wallet : MonoBehaviour
 
     private void IncreaseMoney(int item)
     {
-        _bitcoin = (float)Math.Round(_bitcoin + ItemPrice, RoundingDepth, MidpointRounding.AwayFromZero);
+        _coins += ItemPrice;
 
-        BitcoinChanged?.Invoke(_bitcoin);
-        //ES3.Save(SaveProgress.TitleKey.Money, _bitcoin, SaveProgress.FilePath.Money);
-        MirraSDK.Data.SetFloat(SavableKeys.Bitcoins, _bitcoin);
+        CoinChanged?.Invoke(_coins);
+        MirraSDK.Data.SetInt(SavableKeys.Coins, _coins);
     }
 
-    private void DecreaseMoney(float bitcoin)
+    private void DecreaseMoney(int coins)
     {
-        _bitcoin -= bitcoin;
-        BitcoinChanged?.Invoke(_bitcoin);
-        //ES3.Save(SaveProgress.TitleKey.Money, _bitcoin, SaveProgress.FilePath.Money);
+        if (coins > _coins || coins <= 0 || _coins == 0)
+            return;
         
-        MirraSDK.Data.SetFloat(SavableKeys.Bitcoins, _bitcoin);
+        _coins -= coins;
+        CoinChanged?.Invoke(_coins);
+        
+        MirraSDK.Data.SetInt(SavableKeys.Coins, _coins);
     }
 }

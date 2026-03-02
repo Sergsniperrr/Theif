@@ -6,5 +6,5 @@ public class Level : ScriptableObject
   [field: SerializeField] public string SceneName;
   [field: SerializeField] public string Title;
   [field: SerializeField] public Sprite Icon;
-  [field: SerializeField] public float Price;
+  [field: SerializeField] public int Price;
 }

@@ -10,9 +10,9 @@ public class LevelViewer : MonoBehaviour
 {
     [SerializeField] private Level[] _levels;
     [SerializeField] private bool[] _buyLevels;
-    [SerializeField] private BitcoinDisplay _bitcoinDisplay;
+    [SerializeField] private CoinsDisplay _coinsDisplay;
     [SerializeField] private Wallet _wallet;
-    [SerializeField] private float _price;
+    [SerializeField] private int _price;
     [SerializeField] private TMP_Text _levelName;
     [SerializeField] private Image _icon;
     [SerializeField] private bool _isBuy;
@@ -26,7 +26,7 @@ public class LevelViewer : MonoBehaviour
     private int _currentLevel = 0;
     private string _sceneName;
 
-    public event Action<float> LevelPurchased;
+    public event Action<int> LevelPurchased;
 
     private void OnEnable()
     {
@@ -50,6 +50,7 @@ public class LevelViewer : MonoBehaviour
     {
         LevelPurchaseData levelsData = new LevelPurchaseData(_buyLevels);
         levelsData = MirraSDK.Data.GetObject(SavableKeys.PurchaseLevels, levelsData);
+        //MirraSDK.Data.SetObject(SavableKeys.PurchaseLevels, new LevelPurchaseData(_buyLevels));
         
         _buyLevels = levelsData.Levels;
         
@@ -89,11 +90,11 @@ public class LevelViewer : MonoBehaviour
         if (_isBuy == false)
         {
             if (MirraSDK.Language.Current == LanguageType.Russian)
-                _levelName.text = _levels[_currentLevel].Title + "\n PRICE: " + _levels[_currentLevel].Price + " .BTC";
+                _levelName.text = _levels[_currentLevel].Title + "\n ЦЕНА: " + _levels[_currentLevel].Price;
             else if (MirraSDK.Language.Current == LanguageType.Turkish)
-                _levelName.text = _levels[_currentLevel].Title + "\n PRICE: " + _levels[_currentLevel].Price + " .BTC";
+                _levelName.text = _levels[_currentLevel].Title + "\n FİYAT: " + _levels[_currentLevel].Price;
             else
-                _levelName.text = _levels[_currentLevel].Title + "\n PRICE: " + _levels[_currentLevel].Price + " .BTC";
+                _levelName.text = _levels[_currentLevel].Title + "\n PRICE: " + _levels[_currentLevel].Price;
             
             _playButton.gameObject.SetActive(false);
             _buyButton.gameObject.SetActive(true);
@@ -117,9 +118,9 @@ public class LevelViewer : MonoBehaviour
 
     private void BuyLevel()
     {
-        float nextValue = _wallet.Bitcoin - _price;
+        float nextValue = _wallet.Coins - _price;
 
-        if (nextValue > 0 && _wallet.Bitcoin > _price)
+        if (nextValue > 0 && _wallet.Coins > _price)
         {
             int purchasesNumber = 0;
             purchasesNumber = ES3.Load(SaveProgress.TitleKey.PurchasesNumber, SaveProgress.FilePath.Purchases,
