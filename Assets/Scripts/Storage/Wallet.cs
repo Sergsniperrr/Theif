@@ -1,45 +1,52 @@
 using System;
+using MirraGames.SDK;
 using UnityEngine;
 
 public class Wallet : MonoBehaviour
 {
-  private const int RoundingDepth = 2;
-  private const float ItemPrice = 0.05f;
-  
-  [SerializeField] private float _bitcoin;
-  [SerializeField] private LevelViewer _levelViewer;
-  [SerializeField] private SellButton _sellButton;
+    private const int RoundingDepth = 2;
+    private const float ItemPrice = 0.05f;
 
-  public float Bitcoin => _bitcoin;
-  
-  public event Action<float> BitcoinChanged;
+    [SerializeField] private float _bitcoin;
+    [SerializeField] private LevelViewer _levelViewer;
+    [SerializeField] private SellButton _sellButton;
 
-  private void Awake() => _bitcoin = ES3.Load(SaveProgress.TitleKey.Money, SaveProgress.FilePath.Money, _bitcoin);
+    public float Bitcoin => _bitcoin;
 
-  public void OnEnable()
-  {
-    _sellButton.ItemSold += IncreaseMoney;
-    _levelViewer.LevelPurchased += DecreaseMoney;
-  }
+    public event Action<float> BitcoinChanged;
 
-  private void OnDisable()
-  {
-    _sellButton.ItemSold += IncreaseMoney;
-    _levelViewer.LevelPurchased -= DecreaseMoney;
-  }
+    private void Awake()
+    {
+        _bitcoin = MirraSDK.Data.GetFloat(SavableKeys.Bitcoins);
+    }
 
-  private void IncreaseMoney(int item)
-  {
-    _bitcoin = (float)Math.Round(_bitcoin + ItemPrice, RoundingDepth, MidpointRounding.AwayFromZero);
-    
-    BitcoinChanged?.Invoke(_bitcoin);
-    ES3.Save(SaveProgress.TitleKey.Money, _bitcoin, SaveProgress.FilePath.Money);
-  }
+    public void OnEnable()
+    {
+        _sellButton.ItemSold += IncreaseMoney;
+        _levelViewer.LevelPurchased += DecreaseMoney;
+    }
 
-  private void DecreaseMoney(float bitcoin)
-  {
-    _bitcoin -= bitcoin;
-    BitcoinChanged?.Invoke(_bitcoin);
-    ES3.Save(SaveProgress.TitleKey.Money, _bitcoin, SaveProgress.FilePath.Money);
-  }
+    private void OnDisable()
+    {
+        _sellButton.ItemSold += IncreaseMoney;
+        _levelViewer.LevelPurchased -= DecreaseMoney;
+    }
+
+    private void IncreaseMoney(int item)
+    {
+        _bitcoin = (float)Math.Round(_bitcoin + ItemPrice, RoundingDepth, MidpointRounding.AwayFromZero);
+
+        BitcoinChanged?.Invoke(_bitcoin);
+        //ES3.Save(SaveProgress.TitleKey.Money, _bitcoin, SaveProgress.FilePath.Money);
+        MirraSDK.Data.SetFloat(SavableKeys.Bitcoins, _bitcoin);
+    }
+
+    private void DecreaseMoney(float bitcoin)
+    {
+        _bitcoin -= bitcoin;
+        BitcoinChanged?.Invoke(_bitcoin);
+        //ES3.Save(SaveProgress.TitleKey.Money, _bitcoin, SaveProgress.FilePath.Money);
+        
+        MirraSDK.Data.SetFloat(SavableKeys.Bitcoins, _bitcoin);
+    }
 }
