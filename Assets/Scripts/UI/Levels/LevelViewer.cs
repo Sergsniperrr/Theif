@@ -83,19 +83,14 @@ public class LevelViewer : MonoBehaviour
     {
         _price = _levels[_currentLevel].Price;
         _sceneName = _levels[_currentLevel].SceneName;
-        _levelName.text = _levels[_currentLevel].Title;
+        _levelName.text = _levels[_currentLevel].TitleRu;
         _icon.sprite = _levels[_currentLevel].Icon;
         _isBuy = _buyLevels[_currentLevel];
 
+        SwapLevelTitle();
+        
         if (_isBuy == false)
         {
-            if (MirraSDK.Language.Current == LanguageType.Russian)
-                _levelName.text = _levels[_currentLevel].Title + "\n ЦЕНА: " + _levels[_currentLevel].Price;
-            else if (MirraSDK.Language.Current == LanguageType.Turkish)
-                _levelName.text = _levels[_currentLevel].Title + "\n FİYAT: " + _levels[_currentLevel].Price;
-            else
-                _levelName.text = _levels[_currentLevel].Title + "\n PRICE: " + _levels[_currentLevel].Price;
-            
             _playButton.gameObject.SetActive(false);
             _buyButton.gameObject.SetActive(true);
         }
@@ -119,22 +114,31 @@ public class LevelViewer : MonoBehaviour
     private void BuyLevel()
     {
         float nextValue = _wallet.Coins - _price;
-
-        if (nextValue > 0 && _wallet.Coins > _price)
+        
+        if (nextValue > 0 && _wallet.Coins >= _price)
         {
             int purchasesNumber = 0;
             purchasesNumber = ES3.Load(SaveProgress.TitleKey.PurchasesNumber, SaveProgress.FilePath.Purchases,
                 purchasesNumber);
 
             purchasesNumber++;
-            //ES3.Save(SaveProgress.TitleKey.PurchasesNumber, purchasesNumber, SaveProgress.FilePath.Purchases);
             _buyLevels[_currentLevel] = true;
-            _levelName.text = _levels[_currentLevel].Title;
+            
             LevelPurchased?.Invoke(_price);
             _buyButton.gameObject.SetActive(false);
             _playButton.gameObject.SetActive(true);
             
             MirraSDK.Data.SetObject(SavableKeys.PurchaseLevels, new LevelPurchaseData(_buyLevels));
         }
+    }
+
+    private void SwapLevelTitle()
+    {
+        if (MirraSDK.Language.Current == LanguageType.Russian)
+            _levelName.text = _levels[_currentLevel].TitleRu + "\n ЦЕНА: " + _levels[_currentLevel].Price;
+        else if (MirraSDK.Language.Current == LanguageType.Turkish)
+            _levelName.text = _levels[_currentLevel].TitleTr + "\n FIYAT: " + _levels[_currentLevel].Price;
+        else
+            _levelName.text = _levels[_currentLevel].TitleEn + "\n PRICE: " + _levels[_currentLevel].Price;
     }
 }

@@ -27,6 +27,41 @@
                     }
                 ]
             }
+        },
+        {
+            "key": "EditorConfiguration",
+            "group": {
+                "boolCollection": [
+                    {
+                        "key": "ILanguage.Visible",
+                        "value": true
+                    },
+                    {
+                        "key": "ILanguage.Override",
+                        "value": true
+                    },
+                    {
+                        "key": "IDevice.Visible",
+                        "value": true
+                    },
+                    {
+                        "key": "IDevice.Override",
+                        "value": true
+                    }
+                ],
+                "intCollection": [],
+                "floatCollection": [],
+                "stringCollection": [
+                    {
+                        "key": "PrototypeLanguageInfo_Configuration",
+                        "value": "{\"<CurrentName>k__BackingField\":\"Russian\"}"
+                    },
+                    {
+                        "key": "PrototypeDeviceInfo_Configuration",
+                        "value": "{\"<IsMobile>k__BackingField\":false,\"<SystemTypeName>k__BackingField\":\"Unknown\"}"
+                    }
+                ]
+            }
         }
     ]
 }
