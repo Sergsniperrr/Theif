@@ -41,6 +41,7 @@ MonoBehaviour:
     - Assembly-CSharp
     - AllIn1VfxAssmebly
     - MirraGames.SDK.Editor
+    - FlatKit.Utils.Editor
     - OEBIF
     - MirraGames.SDK.Prototype
     - Sirenix.OdinInspector.Modules.Unity.Addressables

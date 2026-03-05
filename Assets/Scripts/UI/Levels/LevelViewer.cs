@@ -113,7 +113,7 @@ public class LevelViewer : MonoBehaviour
 
     private void BuyLevel()
     {
-        float nextValue = _wallet.Coins - _price;
+        int nextValue = _wallet.Coins - _price;
         
         if (nextValue > 0 && _wallet.Coins >= _price)
         {
