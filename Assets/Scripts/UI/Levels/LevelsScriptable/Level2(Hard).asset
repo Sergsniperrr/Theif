@@ -16,5 +16,5 @@ MonoBehaviour:
   TitleRu: "\u041E\u0424\u0418\u0421 (\u0421\u041B\u041E\u0416\u041D\u042B\u0419)"
   TitleEn: OFFICE (HARD)
   TitleTr: OFIS (ZOR)
-  Icon: {fileID: 21300000, guid: 8e2c542633af1284aa3f1443dacf1065, type: 3}
+  Icon: {fileID: 21300000, guid: 47786700bfbc9694595a8867c730bfcf, type: 3}
   Price: 3000
