@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Wallet : MonoBehaviour
 {
-    private const int RoundingDepth = 2;
     private const int ItemPrice = 50;
 
     [SerializeField] private int _coins;
@@ -14,7 +13,6 @@ public class Wallet : MonoBehaviour
     private int _totalCoins;
     
     public int Coins => _coins;
-    public int TotalCoins => _totalCoins;
 
     public event Action<int> CoinChanged;
 
@@ -45,6 +43,7 @@ public class Wallet : MonoBehaviour
         
         MirraSDK.Data.SetInt(SavableKeys.Coins, _coins);
         MirraSDK.Data.SetInt(SavableKeys.TotalCoins, _totalCoins);
+        MirraSDK.Achievements.SetScore(LeaderboardParams.Name, _totalCoins);
     }
 
     private void DecreaseMoney(int coins)

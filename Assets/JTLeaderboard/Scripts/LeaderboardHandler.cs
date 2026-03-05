@@ -8,7 +8,6 @@ namespace JTLeaderboard.Scripts
     public class LeaderboardHandler : MonoBehaviour
     {
         [Header("Settings")] 
-        [SerializeField] private string _leaderboardName = "Leaderboard";
         [SerializeField] private int _topCount = 5;
 
         [Header("UI")] 
@@ -110,7 +109,7 @@ namespace JTLeaderboard.Scripts
 
         private void LoadFromSDK()
         {
-            MirraSDK.Achievements.GetLeaderboard(_leaderboardName, leaderboard =>
+            MirraSDK.Achievements.GetLeaderboard(LeaderboardParams.Name, leaderboard =>
             {
                 if (leaderboard?.players == null)
                     return;
