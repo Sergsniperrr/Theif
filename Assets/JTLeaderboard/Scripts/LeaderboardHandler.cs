@@ -22,14 +22,12 @@ namespace JTLeaderboard.Scripts
         [SerializeField] private LeaderboardPlayerData _leaderboardPlayerDataPrefab;
 
         private AuthorizationHandler _authorizationHandler;
-
+        
         public void Initialize(AuthorizationHandler authorizationHandler)
         {
             _authorizationHandler = authorizationHandler;
-
-            Hide();
         }
-
+        
         private void OnEnable()
         {
             _openButton.onClick.AddListener(OnOpenClicked);
@@ -63,11 +61,13 @@ namespace JTLeaderboard.Scripts
         private void Show()
         {
             _canvasGroup.SetVisible(true);
+            GameStoper.Stop();
         }
 
         private void Hide()
         {
             _canvasGroup.SetVisible(false);
+            GameStoper.Restart();
         }
 
         private void LoadTop()

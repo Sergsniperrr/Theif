@@ -35,6 +35,8 @@ public class LevelViewer : MonoBehaviour
         _rightArrow.onClick.AddListener(SwipeRight);
         _playButton.onClick.AddListener(SetLevel);
         _buyButton.onClick.AddListener(BuyLevel);
+        
+        GameStoper.Stop();
     }
 
     private void OnDisable()
@@ -44,6 +46,8 @@ public class LevelViewer : MonoBehaviour
         _rightArrow.onClick.RemoveListener(SwipeRight);
         _playButton.onClick.RemoveListener(SetLevel);
         _buyButton.onClick.RemoveListener(BuyLevel);
+        
+        //SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void Start()
@@ -56,7 +60,7 @@ public class LevelViewer : MonoBehaviour
         
         ChangeLevel();
     }
-
+    
     private void SwipeLeft()
     {
         _currentLevel--;
@@ -103,12 +107,15 @@ public class LevelViewer : MonoBehaviour
 
     private void CloseMenu()
     {
+        GameStoper.Restart();
         gameObject.SetActive(false);
     }
 
     private void SetLevel()
     {
         SceneManager.LoadScene(_sceneName);
+        
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void BuyLevel()
@@ -140,5 +147,12 @@ public class LevelViewer : MonoBehaviour
             _levelName.text = _levels[_currentLevel].TitleTr + "\n FIYAT: " + _levels[_currentLevel].Price;
         else
             _levelName.text = _levels[_currentLevel].TitleEn + "\n PRICE: " + _levels[_currentLevel].Price;
+    }
+    
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        GameStoper.Restart();
+        
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }
