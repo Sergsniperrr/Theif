@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using MirraGames.SDK;
 using MirraGames.SDK.Common;
 using TMPro;
@@ -21,7 +22,7 @@ public class LevelViewer : MonoBehaviour
     [SerializeField] private Button _buyButton;
     [SerializeField] private Button _leftArrow;
     [SerializeField] private Button _rightArrow;
-    [SerializeField] private AnalyticManager _analytic;
+    [SerializeField] private Closer _closer;
 
     private int _currentLevel = 0;
     private string _sceneName;
@@ -52,11 +53,11 @@ public class LevelViewer : MonoBehaviour
 
     private void Start()
     {
-        LevelPurchaseData levelsData = new LevelPurchaseData(_buyLevels);
-        levelsData = MirraSDK.Data.GetObject(SavableKeys.PurchaseLevels, levelsData);
+        ListData<bool> levelsData = MirraSDK.Data.GetObject<ListData<bool>>(SavableKeys.PurchaseLevels);
         //MirraSDK.Data.SetObject(SavableKeys.PurchaseLevels, new LevelPurchaseData(_buyLevels));
         
-        _buyLevels = levelsData.Levels;
+        if (levelsData.Items is { Count: > 0 })
+            _buyLevels = levelsData.Items.ToArray();
         
         ChangeLevel();
     }
@@ -113,6 +114,8 @@ public class LevelViewer : MonoBehaviour
 
     private void SetLevel()
     {
+        _closer.InvokeClose();
+        
         SceneManager.LoadScene(_sceneName);
         
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -122,20 +125,15 @@ public class LevelViewer : MonoBehaviour
     {
         int nextValue = _wallet.Coins - _price;
         
-        if (nextValue > 0 && _wallet.Coins >= _price)
+        if (nextValue >= 0 && _wallet.Coins >= _price)
         {
-            int purchasesNumber = 0;
-            purchasesNumber = ES3.Load(SaveProgress.TitleKey.PurchasesNumber, SaveProgress.FilePath.Purchases,
-                purchasesNumber);
-
-            purchasesNumber++;
             _buyLevels[_currentLevel] = true;
             
             LevelPurchased?.Invoke(_price);
             _buyButton.gameObject.SetActive(false);
             _playButton.gameObject.SetActive(true);
             
-            MirraSDK.Data.SetObject(SavableKeys.PurchaseLevels, new LevelPurchaseData(_buyLevels));
+            MirraSDK.Data.SetObject(SavableKeys.PurchaseLevels, new ListData<bool>(_buyLevels.ToList()));
         }
     }
 

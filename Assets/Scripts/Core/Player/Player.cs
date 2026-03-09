@@ -2,49 +2,40 @@ using System;
 using System.Collections.Generic;
 using MirraGames.SDK;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(PlayerMovement))]
 public class Player : MonoBehaviour
 {
     private const float TimeBetweenIsInBox = 1f;
 
-    [SerializeField] private ExitButton _exitButton;
+    [SerializeField] private Closer _exitButton;
     [SerializeField] private ParticleSystem _poofEffect;
     [SerializeField] private GameObject _box;
     [SerializeField] private GameObject _basicZoneBlue;
     [SerializeField] private GameObject _model;
     [SerializeField] private GameObject _targetForFieldOfView;
     [SerializeField] private bool _isTutorial;
+    [SerializeField] private bool _isHaveCar;
 
     private PlayerMovement _playerMover;
     private PlayerNoise _playerNoise;
-    private bool _isFirstEnable =  true;
+    private bool _isFirstEnable = true;
     private bool _isInBox;
     private bool _isGameOver;
     private float _elapsedTime;
     private float _weight;
-    private readonly List<int> _itemsIndex = new ();
+    private List<int> _itemsIndex = new ();
     private readonly List<Item> _items = new ();
 
     public IReadOnlyList<Item> Items => _items;
+    public IReadOnlyList<int> ItemsIndex => _itemsIndex;
 
     public PlayerMovement PlayerMover => _playerMover;
 
     public float Weight => _weight;
 
     public event Action<float> WeightIncreased;
-
-    private void OnEnable()
-    {
-        if (_exitButton != null)
-            _exitButton.PlayerLeft += SaveItems;
-    }
-
-    private void OnDisable()
-    {
-        if (_exitButton != null)
-            _exitButton.PlayerLeft -= SaveItems;
-    }
 
     private void Awake()
     {
@@ -53,6 +44,29 @@ public class Player : MonoBehaviour
 
         if (_isTutorial)
             TurnOffStealth();
+
+        if (_isHaveCar == false)
+        {
+            ListData<int> playerItems = MirraSDK.Data.GetObject<ListData<int>>(SavableKeys.PlayerItems);
+
+            if (playerItems.Items == null || playerItems.Items.Count > 0)
+            {
+                _itemsIndex = playerItems.Items;
+            }
+
+            if (_itemsIndex != null)
+                Debug.Log($"Восстановлено кол-во предметов: {_itemsIndex.Count}");
+        }
+    }
+
+    private void OnEnable()
+    {
+        _exitButton.Closed += SaveItems;
+    }
+
+    private void OnDisable()
+    {
+        _exitButton.Closed -= SaveItems;
     }
 
     private void Update()
@@ -108,15 +122,27 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void SaveItems() => ES3.Save(SaveProgress.TitleKey.Items, _itemsIndex, SaveProgress.FilePath.Items);
+    private void SaveItems()
+    {
+        if (!Application.isPlaying || !MirraSDK.IsInitialized)
+            return;
 
-    public void AddItem(Item item) => _items.Add(item);
+        MirraSDK.Data.SetObject(SavableKeys.PlayerItems, new ListData<int>(_itemsIndex));
+        
+        Debug.Log($"Сохранено {_itemsIndex.Count} предметов");
+    }
+
+    public void AddItem(Item item)
+    {
+        _items.Add(item);
+    }
 
     public void DeleteItem(Item item) => _items.Remove(item);
 
     public void TakeItem(Item item)
     {
         _weight += item.Weight;
+
         _playerMover.DecreaseSpeed();
         _itemsIndex.Add(item.Index);
         WeightIncreased?.Invoke(item.Weight);

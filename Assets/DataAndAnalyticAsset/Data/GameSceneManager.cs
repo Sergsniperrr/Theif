@@ -24,20 +24,20 @@ public class GameSceneManager : MonoBehaviour
         _analytic.SendEventOnLevelStart(_data.GetDisplayedLevelNumber());
     }
 
-    private void OnApplicationQuit()
-    {
-        _analytic.SendEventOnGameExit(_data.GetRegistrationDate(), _data.GetSessionCount(), _data.GetNumberDaysAfterRegistration(), _data.GetCurrentSoft());
-        _data.Save();
-    }
+    // private void OnApplicationQuit()
+    // {
+    //     _analytic.SendEventOnGameExit(_data.GetRegistrationDate(), _data.GetSessionCount(), _data.GetNumberDaysAfterRegistration(), _data.GetCurrentSoft());
+    //     _data.Save();
+    // }
 
-    private void OnApplicationPause(bool pause)
-    {
-        if(pause)
-        {
-            _analytic.SendEventOnGameExit(_data.GetRegistrationDate(), _data.GetSessionCount(), _data.GetNumberDaysAfterRegistration(), _data.GetCurrentSoft());
-            _data.Save();
-        }
-    }
+    // private void OnApplicationPause(bool pause)
+    // {
+    //     if(pause)
+    //     {
+    //         _analytic.SendEventOnGameExit(_data.GetRegistrationDate(), _data.GetSessionCount(), _data.GetNumberDaysAfterRegistration(), _data.GetCurrentSoft());
+    //         _data.Save();
+    //     }
+    // }
 
     public void LevelFail()
     {
@@ -52,7 +52,7 @@ public class GameSceneManager : MonoBehaviour
         else
             _nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
         _data.SetLevelIndex(_nextLevelIndex);
-        _data.AddDisplayedLevelNumber();
+        //_data.AddDisplayedLevelNumber();
         _data.Save();
         SceneManager.LoadScene(_nextLevelIndex);
     }

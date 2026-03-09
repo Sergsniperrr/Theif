@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Bootstrap : MonoBehaviour
 {
-    private int _idleZoneIndex = 2;
+    private int _idleZoneIndex = 1;
 
     private void OnEnable()
     {

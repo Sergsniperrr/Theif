@@ -21,20 +21,20 @@ public class AnalyticHelper : MonoBehaviour
     _analytic.SendEventOnLevelStart(SceneManager.GetActiveScene().buildIndex);
   }
 
-  private void OnApplicationPause(bool pauseStatus)
-  {
-    if (pauseStatus)
-    {
-      _analytic.SendEventOnGameExit(_data.GetRegistrationDate(), _data.GetSessionCount(), _data.GetNumberDaysAfterRegistration(), GetCurrentBitcoin());
-      _data.Save();
-    }
-  }
+  // private void OnApplicationPause(bool pauseStatus)
+  // {
+  //   if (pauseStatus)
+  //   {
+  //     _analytic.SendEventOnGameExit(_data.GetRegistrationDate(), _data.GetSessionCount(), _data.GetNumberDaysAfterRegistration(), GetCurrentBitcoin());
+  //     _data.Save();
+  //   }
+  // }
 
-  private void OnApplicationQuit()
-  {
-    _analytic.SendEventOnGameExit(_data.GetRegistrationDate(), _data.GetSessionCount(), _data.GetNumberDaysAfterRegistration(), GetCurrentBitcoin());
-    _data.Save();
-  }
+  // private void OnApplicationQuit()
+  // {
+  //   _analytic.SendEventOnGameExit(_data.GetRegistrationDate(), _data.GetSessionCount(), _data.GetNumberDaysAfterRegistration(), GetCurrentBitcoin());
+  //   _data.Save();
+  // }
 
   private float GetCurrentBitcoin()
   {

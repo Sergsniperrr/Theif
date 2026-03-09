@@ -70,15 +70,15 @@ public class Data : MonoBehaviour
         return _options.SessionCount;
     }
 
-    public void AddDisplayedLevelNumber()
-    {
-        _options.DisplayedLevelNumber++;
-    }
+    // public void AddDisplayedLevelNumber()
+    // {
+    //     _options.DisplayedLevelNumber++;
+    // }
 
-    public int GetNumberDaysAfterRegistration()
-    {
-        return (DateTime.Parse(_options.LastLoginDate) - DateTime.Parse(_options.RegistrationDate)).Days;
-    }
+    // public int GetNumberDaysAfterRegistration()
+    // {
+    //     return (DateTime.Parse(_options.LastLoginDate) - DateTime.Parse(_options.RegistrationDate)).Days;
+    // }
 
     public int GetDisplayedLevelNumber()
     {
