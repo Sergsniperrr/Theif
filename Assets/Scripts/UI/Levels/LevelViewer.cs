@@ -24,13 +24,15 @@ public class LevelViewer : MonoBehaviour
     [SerializeField] private Button _rightArrow;
     [SerializeField] private Closer _closer;
 
-    private int _currentLevel = 0;
+    private int _currentLevel;
     private string _sceneName;
 
     public event Action<int> LevelPurchased;
 
     private void OnEnable()
     {
+        _currentLevel = MirraSDK.Data.GetInt(SavableKeys.CurrentLevel);
+        
         _exitButton.onClick.AddListener(CloseMenu);
         _leftArrow.onClick.AddListener(SwipeLeft);
         _rightArrow.onClick.AddListener(SwipeRight);
@@ -58,7 +60,8 @@ public class LevelViewer : MonoBehaviour
         
         if (levelsData.Items is { Count: > 0 })
             _buyLevels = levelsData.Items.ToArray();
-        
+
+        HandleArrows();
         ChangeLevel();
     }
     
@@ -66,10 +69,7 @@ public class LevelViewer : MonoBehaviour
     {
         _currentLevel--;
 
-        if (_currentLevel == 0)
-            _leftArrow.gameObject.SetActive(false);
-
-        _rightArrow.gameObject.SetActive(true);
+        HandleArrows();
         ChangeLevel();
     }
 
@@ -77,10 +77,7 @@ public class LevelViewer : MonoBehaviour
     {
         _currentLevel++;
 
-        if (_currentLevel == _levels.Length - 1)
-            _rightArrow.gameObject.SetActive(false);
-
-        _leftArrow.gameObject.SetActive(true);
+        HandleArrows();
         ChangeLevel();
     }
 
@@ -106,14 +103,35 @@ public class LevelViewer : MonoBehaviour
         }
     }
 
+    private void HandleArrows()
+    {
+        if (_currentLevel == 0)
+        {
+            _rightArrow.gameObject.SetActive(true);
+            _leftArrow.gameObject.SetActive(false);
+        }
+        else if (_currentLevel == _levels.Length - 1)
+        {
+            _rightArrow.gameObject.SetActive(false);
+            _leftArrow.gameObject.SetActive(true);
+        }
+        else
+        {
+            _rightArrow.gameObject.SetActive(true);
+            _leftArrow.gameObject.SetActive(true);
+        }
+    }
+    
     private void CloseMenu()
     {
+        MirraSDK.Data.SetInt(SavableKeys.CurrentLevel, _currentLevel);
         GameStoper.Restart();
         gameObject.SetActive(false);
     }
 
     private void SetLevel()
     {
+        MirraSDK.Data.SetInt(SavableKeys.CurrentLevel, _currentLevel);
         _closer.InvokeClose();
         
         SceneManager.LoadScene(_sceneName);

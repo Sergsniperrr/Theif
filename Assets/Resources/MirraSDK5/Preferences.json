@@ -23,7 +23,7 @@
                 "stringCollection": [
                     {
                         "key": "Configuration",
-                        "value": "FallbackConfiguration"
+                        "value": "MirraWebConfiguration"
                     }
                 ]
             }
@@ -42,7 +42,7 @@
                     },
                     {
                         "key": "IDevice.Visible",
-                        "value": true
+                        "value": false
                     },
                     {
                         "key": "IDevice.Override",
@@ -61,6 +61,32 @@
                         "value": "{\"<IsMobile>k__BackingField\":false,\"<SystemTypeName>k__BackingField\":\"Unknown\"}"
                     }
                 ]
+            }
+        },
+        {
+            "key": "FallbackConfiguration",
+            "group": {
+                "boolCollection": [
+                    {
+                        "key": "IAssets.Visible",
+                        "value": false
+                    },
+                    {
+                        "key": "IBootstrap.Visible",
+                        "value": false
+                    },
+                    {
+                        "key": "ILanguage.Visible",
+                        "value": false
+                    },
+                    {
+                        "key": "IPause.Visible",
+                        "value": false
+                    }
+                ],
+                "intCollection": [],
+                "floatCollection": [],
+                "stringCollection": []
             }
         }
     ]

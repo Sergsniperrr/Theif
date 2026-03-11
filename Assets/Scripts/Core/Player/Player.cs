@@ -29,7 +29,6 @@ public class Player : MonoBehaviour
     private readonly List<Item> _items = new ();
 
     public IReadOnlyList<Item> Items => _items;
-    public IReadOnlyList<int> ItemsIndex => _itemsIndex;
 
     public PlayerMovement PlayerMover => _playerMover;
 
@@ -61,12 +60,14 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-        _exitButton.Closed += SaveItems;
+        if (_exitButton != null)
+            _exitButton.Closed += SaveItems;
     }
 
     private void OnDisable()
     {
-        _exitButton.Closed -= SaveItems;
+        if (_exitButton != null)
+            _exitButton.Closed -= SaveItems;
     }
 
     private void Update()
@@ -128,7 +129,7 @@ public class Player : MonoBehaviour
             return;
 
         MirraSDK.Data.SetObject(SavableKeys.PlayerItems, new ListData<int>(_itemsIndex));
-        
+
         Debug.Log($"Сохранено {_itemsIndex.Count} предметов");
     }
 

@@ -8,7 +8,6 @@ public class FailHud : HUD
 {
     [SerializeField] private Button _goToHomeButton;
     [SerializeField] private Button _restartButton;
-    [SerializeField] private AnalyticManager _analytic;
 
     private CanvasGroup _canvasGroup;
     private float _endValue = 1;

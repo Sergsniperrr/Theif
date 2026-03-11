@@ -35,6 +35,7 @@ MonoBehaviour:
     - MirraGames.SDK.UnityEngine
     - AllIn1VfxDemoScriptAssemblies
     - Zenject-IntegrationTests
+    - MirraGames.SDK.MirraWeb
     - MirraGames.SDK
     - MirraGames.SDK.Fallback
     - Cinemachine

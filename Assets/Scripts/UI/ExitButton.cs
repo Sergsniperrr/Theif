@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class ExitButton : MonoBehaviour
 {
-    [SerializeField] private AnalyticManager _analytic;
-
     private Button _goToHomeButton;
 
     public event Action PlayerLeft;
