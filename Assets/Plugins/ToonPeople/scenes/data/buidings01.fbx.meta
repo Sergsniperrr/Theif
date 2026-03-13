@@ -1,47 +1,119 @@
 fileFormatVersion: 2
 guid: 4f37734b759c3ab4681718cc8ff71642
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2100000: concrete02
-    2100002: concrete01
-    2100004: black
-    2100006: sidewalk
-    2100008: wall02
-    2100010: door02
-    2100012: shop
-    2100014: window01
-    2100016: concrete03
-    2100018: door01
-    2100020: door03
-    2100022: shop02
-    2100024: wall01
-    2100026: window03
-    2100028: shoppie
-    2100030: awning02
-    2100032: signs01
-    2100034: awning01
-    2100036: brick02
-    2100038: brick01
-    2100040: brick03
-    2100042: window02
-    2100044: shopclosed
-    2100046: brick04
-    2100048: shopbooks
-    2100050: gray
-    2100052: trafficlights
-    2100054: Standard_2
-    2100056: asphalt02
-    2100058: asphalt01
-    2100060: asphalt03
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: street01
+  serializedVersion: 22200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      21: 2100000
+    second: concrete02
+  - first:
+      21: 2100002
+    second: concrete01
+  - first:
+      21: 2100004
+    second: black
+  - first:
+      21: 2100006
+    second: sidewalk
+  - first:
+      21: 2100008
+    second: wall02
+  - first:
+      21: 2100010
+    second: door02
+  - first:
+      21: 2100012
+    second: shop
+  - first:
+      21: 2100014
+    second: window01
+  - first:
+      21: 2100016
+    second: concrete03
+  - first:
+      21: 2100018
+    second: door01
+  - first:
+      21: 2100020
+    second: door03
+  - first:
+      21: 2100022
+    second: shop02
+  - first:
+      21: 2100024
+    second: wall01
+  - first:
+      21: 2100026
+    second: window03
+  - first:
+      21: 2100028
+    second: shoppie
+  - first:
+      21: 2100030
+    second: awning02
+  - first:
+      21: 2100032
+    second: signs01
+  - first:
+      21: 2100034
+    second: awning01
+  - first:
+      21: 2100036
+    second: brick02
+  - first:
+      21: 2100038
+    second: brick01
+  - first:
+      21: 2100040
+    second: brick03
+  - first:
+      21: 2100042
+    second: window02
+  - first:
+      21: 2100044
+    second: shopclosed
+  - first:
+      21: 2100046
+    second: brick04
+  - first:
+      21: 2100048
+    second: shopbooks
+  - first:
+      21: 2100050
+    second: gray
+  - first:
+      21: 2100052
+    second: trafficlights
+  - first:
+      21: 2100054
+    second: Standard_2
+  - first:
+      21: 2100056
+    second: asphalt02
+  - first:
+      21: 2100058
+    second: asphalt01
+  - first:
+      21: 2100060
+    second: asphalt03
+  - first:
+      23: 2300000
+    second: //RootNode
+  - first:
+      33: 3300000
+    second: //RootNode
+  - first:
+      43: 4300000
+    second: street01
   externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 2
     materialLocation: 0
@@ -50,6 +122,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -71,28 +144,39 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 0
+    meshCompression: 3
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
     importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 1
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -101,10 +185,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 1
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -114,13 +198,19 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
   humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
