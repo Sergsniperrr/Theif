@@ -7,4 +7,5 @@ public static class SavableKeys
     public static string Coins => "Coins";
     public static string TotalCoins => "TotalCoins";
     public static string CurrentLevel => "CurrentLevel";
+    public static string IsShowedTutorial => "IsShowedTutorial";
 }
