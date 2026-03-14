@@ -59,6 +59,9 @@ public class Car : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
+        if (_itemsIndex == null || _itemsIndex.Count == 0)
+            return;
+        
         if (collider.TryGetComponent(out Player player))
         {
             for (int i = 0; i < _itemsIndex.Count; i++)
