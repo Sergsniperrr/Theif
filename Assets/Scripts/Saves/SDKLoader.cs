@@ -1,19 +1,31 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using MirraGames.SDK;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SDKLoader : MonoBehaviour
 {
-    [SerializeField] private Bootstrap _bootstrap;
-
+    private readonly int _idleZoneIndex = 1;
+    
     private void Start()
     {
+        // Подписываемся на событие загрузки сцены
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        // Ждём инициализации MirraSDK
         MirraSDK.WaitForProviders(() =>
         {
-            _bootstrap.gameObject.SetActive(true);
+            // После инициализации SDK загружаем игровую сцену
+            SceneManager.LoadScene(_idleZoneIndex, LoadSceneMode.Single);
         });
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Отписываемся от события
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+
+        // Сообщаем SDK, что игра полностью загружена
+        MirraSDK.Analytics.GameIsReady();
+        MirraSDK.Analytics.GameplayStart();
     }
 }

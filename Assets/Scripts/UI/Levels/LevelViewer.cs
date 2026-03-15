@@ -28,6 +28,7 @@ public class LevelViewer : MonoBehaviour
     private string _sceneName;
 
     public event Action<int> LevelPurchased;
+    public event Action Closed;
 
     private void OnEnable()
     {
@@ -49,14 +50,11 @@ public class LevelViewer : MonoBehaviour
         _rightArrow.onClick.RemoveListener(SwipeRight);
         _playButton.onClick.RemoveListener(SetLevel);
         _buyButton.onClick.RemoveListener(BuyLevel);
-        
-        //SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void Start()
     {
         ListData<bool> levelsData = MirraSDK.Data.GetObject<ListData<bool>>(SavableKeys.PurchaseLevels);
-        //MirraSDK.Data.SetObject(SavableKeys.PurchaseLevels, new LevelPurchaseData(_buyLevels));
         
         if (levelsData.Items is { Count: > 0 })
             _buyLevels = levelsData.Items.ToArray();
@@ -124,6 +122,8 @@ public class LevelViewer : MonoBehaviour
     
     private void CloseMenu()
     {
+        Closed?.Invoke();
+        
         MirraSDK.Data.SetInt(SavableKeys.CurrentLevel, _currentLevel);
         GameStoper.Restart();
         gameObject.SetActive(false);

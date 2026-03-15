@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,6 +6,8 @@ public class LevelButton : MonoBehaviour
 {
   [SerializeField] private LevelViewer _levelViewer;
   [SerializeField] private Button _button;
+
+  public event Action LevelsViewEnebled;
   
   private void OnEnable()
   {
@@ -31,5 +34,7 @@ public class LevelButton : MonoBehaviour
   private void ActivateButton()
   {
     _levelViewer.gameObject.SetActive(true);
+    
+    LevelsViewEnebled?.Invoke();
   }
 }

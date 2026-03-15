@@ -8,6 +8,7 @@ public class Wallet : MonoBehaviour
 
     [SerializeField] private int _coins;
     [SerializeField] private LevelViewer _levelViewer;
+    [SerializeField] private LevelButton _levelButton;
     [SerializeField] private SellButton _sellButton;
 
     private int _totalCoins;
@@ -22,16 +23,28 @@ public class Wallet : MonoBehaviour
         _totalCoins = MirraSDK.Data.GetInt(SavableKeys.Coins);
     }
 
-    public void OnEnable()
+    private void OnEnable()
     {
         _sellButton.ItemSold += IncreaseMoney;
-        _levelViewer.LevelPurchased += DecreaseMoney;
+        _levelButton.LevelsViewEnebled += SubscribeToLevelsViewer;
     }
 
     private void OnDisable()
     {
-        _sellButton.ItemSold += IncreaseMoney;
+        _sellButton.ItemSold -= IncreaseMoney;
+        _levelButton.LevelsViewEnebled -= SubscribeToLevelsViewer;
+    }
+
+    private void SubscribeToLevelsViewer()
+    {
+        _levelViewer.LevelPurchased += DecreaseMoney;
+        _levelViewer.Closed += UnsubscribeFromLevelsViewer;
+    }
+    
+    private void UnsubscribeFromLevelsViewer()
+    {
         _levelViewer.LevelPurchased -= DecreaseMoney;
+        _levelViewer.Closed -= UnsubscribeFromLevelsViewer;
     }
 
     private void IncreaseMoney(int item)
