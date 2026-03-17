@@ -19,7 +19,6 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _isHaveCar;
 
     private PlayerMovement _playerMover;
-    private PlayerNoise _playerNoise;
     private bool _isFirstEnable = true;
     private bool _isInBox;
     private bool _isGameOver;
@@ -38,7 +37,6 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        _playerNoise = GetComponent<PlayerNoise>();
         _playerMover = GetComponent<PlayerMovement>();
 
         if (_isTutorial)

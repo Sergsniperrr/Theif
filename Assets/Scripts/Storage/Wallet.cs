@@ -10,6 +10,7 @@ public class Wallet : MonoBehaviour
     [SerializeField] private LevelViewer _levelViewer;
     [SerializeField] private LevelButton _levelButton;
     [SerializeField] private SellButton _sellButton;
+    [SerializeField] private RewardAd _rewardAdButton;
 
     private int _totalCoins;
     
@@ -25,14 +26,16 @@ public class Wallet : MonoBehaviour
 
     private void OnEnable()
     {
-        _sellButton.ItemSold += IncreaseMoney;
+        _sellButton.ItemSold += IncreaseMoneyFromSaleItem;
         _levelButton.LevelsViewEnebled += SubscribeToLevelsViewer;
+        _rewardAdButton.RewardAdShowed += IncreaseMoneyFromReward;
     }
 
     private void OnDisable()
     {
-        _sellButton.ItemSold -= IncreaseMoney;
+        _sellButton.ItemSold -= IncreaseMoneyFromSaleItem;
         _levelButton.LevelsViewEnebled -= SubscribeToLevelsViewer;
+        _rewardAdButton.RewardAdShowed -= IncreaseMoneyFromReward;
     }
 
     private void SubscribeToLevelsViewer()
@@ -47,10 +50,23 @@ public class Wallet : MonoBehaviour
         _levelViewer.Closed -= UnsubscribeFromLevelsViewer;
     }
 
-    private void IncreaseMoney(int item)
+    private void IncreaseMoneyFromSaleItem(int item)
     {
-        _coins += ItemPrice;
-        _totalCoins += ItemPrice;
+        IncreaseMoney(ItemPrice);
+    }
+
+    private void IncreaseMoneyFromReward(int coins)
+    {
+        IncreaseMoney(coins);
+    }
+    
+    private void IncreaseMoney(int coins)
+    {
+        if (coins <= 0)
+            throw new ArgumentOutOfRangeException(nameof(coins));
+        
+        _coins += coins;
+        _totalCoins += coins;
 
         CoinChanged?.Invoke(_coins);
         

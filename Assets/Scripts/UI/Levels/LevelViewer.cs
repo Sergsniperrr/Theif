@@ -126,6 +126,7 @@ public class LevelViewer : MonoBehaviour
         
         MirraSDK.Data.SetInt(SavableKeys.CurrentLevel, _currentLevel);
         GameStoper.Restart();
+        
         gameObject.SetActive(false);
     }
 
@@ -133,6 +134,8 @@ public class LevelViewer : MonoBehaviour
     {
         MirraSDK.Data.SetInt(SavableKeys.CurrentLevel, _currentLevel);
         _closer.InvokeClose();
+        
+        MirraSDK.Ads.InvokeInterstitial();
         
         SceneManager.LoadScene(_sceneName);
         

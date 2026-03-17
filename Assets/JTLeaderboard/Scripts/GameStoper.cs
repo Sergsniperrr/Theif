@@ -19,6 +19,6 @@ public static class GameStoper
     public static void Restart()
     {
         MirraSDK.Time.Scale = NormalTimeScale;
-        MirraSDK.Analytics.GameplayRestart();
+        MirraSDK.Analytics.GameplayStart();
     }
 }
